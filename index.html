@@ -3,409 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évaluation d'Orientation Test IA - Commencez</title> <!-- Updated Title -->
+    <title>Évaluation d'Orientation Test IA - Test en Cours</title> <!-- Updated Title -->
     <link rel="stylesheet" href="cvvv.css"> <!-- Ensure this path is correct -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> <!-- Added Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* General Reset & Base Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; background-color: #f4f7f6; transition: background-color 0.3s ease; }
 
-        body {
-            font-family: 'Poppins', sans-serif; /* Apply modern font */
-            line-height: 1.6;
-            color: #333;
-            background-color: #f4f7f6; /* Softer background */
-            transition: background-color 0.3s ease; /* Smooth transition */
-        }
+        /* --- Header --- */
+        #navbar { background-color: #ffffff; color: #333; padding: 15px 30px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease; position: relative; }
+        .logo { display: flex; align-items: center; justify-content: center; padding: 10px; margin: 0 auto; }
+        .logo img { max-width: 200px; height: auto; }
+        #navbar nav { margin-left: auto; }
+        #navbar nav a { color: #333; text-decoration: none; margin-left: 20px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s ease, color 0.3s ease; }
+        #navbar nav a:hover, #navbar nav a.active { background-color: #0056b3; color: #ffffff; }
+        #navbar.sticky { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 
-        /* Header Styling */
-        #navbar {
-            background-color: #ffffff;
-            color: #333;
-            padding: 15px 30px;
+        /* --- Section Styling --- */
+        section { padding: 40px 20px; margin: 20px auto; max-width: 900px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); opacity: 1; transform: translateY(0); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        section.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; max-height: 0; padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0; overflow: hidden; border: none; box-shadow: none; transition: opacity 0.4s ease-in, transform 0.4s ease-in, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s ease-in-out; }
+
+        /* --- Headings & Text --- */
+        h1, h2 { color: #0056b3; margin-bottom: 20px; text-align: center; }
+        p { margin-bottom: 15px; color: #555; }
+        ul { list-style: none; padding-left: 0; }
+        ul li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        ul li::before { content: '✓'; color: #28a745; position: absolute; left: 0; font-weight: bold; }
+
+        /* --- User Info Form --- */
+        #user-info-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 5px; font-weight: 500; color: #333; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"] { padding: 12px 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .form-group input:focus { border-color: #0056b3; box-shadow: 0 0 5px rgba(0, 86, 179, 0.3); outline: none; }
+
+        /* --- Buttons --- */
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: background-color 0.3s ease, transform 0.1s ease; display: inline-block; margin-top: 10px; }
+        button:hover { background-color: #0056b3; }
+        button:active { transform: scale(0.98); }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; } /* Disabled state */
+        .button-container { text-align: center; margin-top: 20px; }
+
+        /* --- Question Styling --- */
+        #questions-container { margin-top: 20px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fdfdfd; min-height: 300px; /* Ensure container has height */ }
+        .question-block { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed #ccc; animation: fadeIn 0.5s ease-out forwards; opacity: 0; /* Fade in */ }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 5px; }
+        .question-block p { margin-bottom: 12px; font-weight: 500; color: #333; text-align: center; }
+        .question-block .options { display: flex; justify-content: center; gap: 40px; margin-top: 10px; }
+        .question-block label { cursor: pointer; display: inline-flex; align-items: center; transition: color 0.2s ease; }
+        .question-block label:hover { color: #0056b3; }
+        .question-block input[type="radio"] { margin-right: 8px; cursor: pointer; accent-color: #007bff; transform: scale(1.1); }
+
+        /* --- Pagination Controls --- */
+        #pagination-controls {
             display: flex;
-            /* justify-content: space-between; */ /* Removed */
+            justify-content: space-between; /* Space out Prev/Next */
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease;
-            position: relative; /* Good practice if children might be positioned absolutely later */
-        }
-            .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-        margin: 0 auto; /* ADD THIS LINE TO CENTER THE LOGO DIV */
-        /* You might want to remove left/right padding from #navbar if the logo looks too far from edges now */
-        /* Or adjust the padding on #navbar */
-        }
-
-        .logo img {
-            max-width: 200px; /* control the width */
-            height: auto; /* maintain aspect ratio */
-            }
-
-            #navbar nav {
-     margin-left: auto; /* ADD THIS RULE TO PUSH NAV TO THE RIGHT */
-     /* You might need display: flex; here if the links don't align as desired */
-     /* display: flex; */
-     /* align-items: center; */
-}
-
-        #navbar nav a {
-            color: #333;
-            text-decoration: none;
-            margin-left: 20px; /* Keep space between nav links */
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        #navbar nav a:hover, #navbar nav a.active {
-            background-color: #0056b3;
-            color: #ffffff;
-        }
-        #navbar.sticky { /* Style for sticky header */
-             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-
-        /* Section Styling */
-        section {
-            padding: 40px 20px;
-            margin: 20px auto;
-            max-width: 900px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Animation */
-        }
-
-        /* Hide elements smoothly */
-        section.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none; /* Prevent interaction when hidden */
-            max-height: 0; /* Collapse space */
-            padding-top: 0;
-            padding-bottom: 0;
-            margin-top: 0;
-            margin-bottom: 0;
-            overflow: hidden; /* Crucial for collapsing */
-            border: none;
-            box-shadow: none;
-             transition: opacity 0.4s ease-in, transform 0.4s ease-in, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s ease-in-out;
-        }
-
-
-        h1, h2 {
-            color: #0056b3; /* Brand color for headings */
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #555;
-        }
-
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        ul li {
-             margin-bottom: 10px;
-             padding-left: 20px;
-             position: relative;
-        }
-         ul li::before {
-             content: '✓'; /* Checkmark */
-             color: #28a745; /* Green color */
-             position: absolute;
-             left: 0;
-             font-weight: bold;
-         }
-
-        /* User Info Form Styles */
-        #user-info-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Space between form elements */
-            margin-top: 20px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #333;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"] {
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
-            outline: none;
-        }
-
-        /* Button Styling */
-        button {
-            background-color: #007bff; /* Primary blue */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            display: inline-block; /* Align center */
-            margin-top: 10px; /* Space above button */
-        }
-        button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
-         button:active {
-            transform: scale(0.98); /* Press effect */
-         }
-
-        /* Centered Button Container */
-         .button-container {
-            text-align: center;
-            margin-top: 20px;
-         }
-
-
-        /* Question Styling (Adjusted from original) */
-        #questions-container {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fdfdfd;
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #ccc;
-            animation: fadeIn 0.5s ease-out forwards; /* Add fade-in for questions */
-            opacity: 0; /* Start hidden for animation */
-        }
-         .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 5px;
-         }
-        .question-block p {
-            margin-bottom: 12px;
-            font-weight: 500;
-            color: #333;
-            text-align: center; /* Center the question text as well */
-        }
-        .question-block .options {
-             display: flex; /* Align radio buttons nicely */
-             justify-content: center; /* Center the items horizontally */
-             gap: 40px; /* Increased gap for better visual separation when centered */
-             margin-top: 10px;
-        }
-        .question-block label {
-            cursor: pointer;
-            display: inline-flex; /* Align radio and text */
-            align-items: center;
-            transition: color 0.2s ease;
-        }
-         .question-block label:hover {
-             color: #0056b3; /* Highlight on hover */
-         }
-        .question-block input[type="radio"] {
-            margin-right: 8px;
-            cursor: pointer;
-            accent-color: #007bff; /* Modern way to color radios */
-            transform: scale(1.1); /* Slightly larger */
-        }
-
-        /* Validation and Status Messages */
-        #user-info-error,
-        #validation-error {
-            color: #d9534f; /* Bootstrap danger color */
-            font-weight: 500;
-            margin-top: 15px;
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #d9534f;
-            background-color: #f2dede;
-            border-radius: 5px;
-            display: none; /* Hidden by default */
-            animation: shake 0.5s; /* Shake animation for errors */
-        }
-
-        #submission-status {
-             margin-top: 20px;
-             padding: 15px;
-             border-radius: 5px;
-             text-align: center;
-             font-weight: bold;
-             animation: fadeIn 0.5s ease-out; /* Fade in status */
-        }
-        .status-success {
-            color: #3c763d; /* Dark green */
-            background-color: #dff0d8; /* Light green */
-            border: 1px solid #d6e9c6;
-        }
-        .status-error {
-            color: #a94442; /* Dark red */
-            background-color: #f2dede; /* Light red */
-            border: 1px solid #ebccd1;
-        }
-
-        /* Loading Indicator */
-        #loading-indicator {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            font-style: italic;
-            color: #555;
-            display: flex; /* Use flex for centering spinner */
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border-left-color: #007bff;
-            animation: spin 1s ease infinite;
-        }
-
-        /* Contact & Copyright */
-        .contact ul, .copyright p {
-             text-align: center;
-        }
-         .contact ul li {
-             display: inline-block;
-             margin: 0 15px;
-             padding-left: 0;
-         }
-          .contact ul li::before {
-             content: ''; /* Remove default check */
-         }
-        .copyright {
             margin-top: 30px;
-            padding-top: 20px;
+            padding: 15px 0;
             border-top: 1px solid #eee;
-            color: #777;
-            font-size: 0.9em;
         }
-
-        /* Keyframe Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-         @keyframes shake {
-             0%, 100% { transform: translateX(0); }
-             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-             20%, 40%, 60%, 80% { transform: translateX(5px); }
+         #pagination-controls span {
+             font-weight: 500;
+             color: #555;
          }
 
-         /* Responsive Adjustments (Example) */
-         @media (max-width: 768px) {
-             #navbar {
-                 flex-direction: column;
-                 padding: 10px 15px;
-             }
-             #navbar nav {
-                 margin-top: 10px;
-             }
-             #navbar nav a {
-                 margin: 0 5px;
-                 display: inline-block; /* Prevent stacking */
-             }
-             h1 { font-size: 1.8em; }
-             h2 { font-size: 1.4em; }
-             /* Stack options vertically on smaller screens if needed */
-             /* .question-block .options {
-                 flex-direction: column;
-                 align-items: center;
-             } */
-         }
+        /* --- Validation & Status Messages --- */
+        #user-info-error, #validation-error { color: #d9534f; font-weight: 500; margin-top: 15px; text-align: center; padding: 10px; border: 1px solid #d9534f; background-color: #f2dede; border-radius: 5px; display: none; animation: shake 0.5s; }
 
+        /* --- Submission Status Section --- */
+        #submission-status-section {
+            /* Styles for when it's the main content */
+            padding: 60px 20px; /* More padding */
+            text-align: center;
+        }
+        #submission-status { margin-top: 0; /* Reset margin if needed */ padding: 20px; border-radius: 8px; font-weight: bold; font-size: 1.1em; animation: fadeIn 0.5s ease-out; display: block; /* Ensure it's block */ }
+        .status-success { color: #3c763d; background-color: #dff0d8; border: 1px solid #d6e9c6; }
+        .status-error { color: #a94442; background-color: #f2dede; border: 1px solid #ebccd1; }
 
+        /* --- Loading Indicator --- */
+        #loading-indicator { display: none; text-align: center; padding: 20px; font-style: italic; color: #555; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 24px; height: 24px; border-radius: 50%; border-left-color: #007bff; animation: spin 1s ease infinite; }
+
+        /* --- Copyright & Contact --- */
+        .contact ul, .copyright p { text-align: center; }
+        .contact ul li { display: inline-block; margin: 0 15px; padding-left: 0; }
+        .contact ul li::before { content: ''; }
+        .copyright { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #777; font-size: 0.9em; }
+
+        /* --- Keyframes --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            #navbar { flex-direction: column; padding: 10px 15px; }
+            #navbar nav { margin-top: 10px; }
+            #navbar nav a { margin: 0 5px; display: inline-block; }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.4em; }
+             #pagination-controls { flex-direction: column; gap: 15px; } /* Stack pagination controls */
+        }
     </style>
 </head>
 <body>
     <header id="navbar">
         <div class="logo">
-             <!-- Make sure this path is correct and accessible by the browser -->
-             <!-- If using a local file path like C:\..., it will ONLY work on YOUR computer -->
-             <!-- Best practice: Place the logo in the same folder as your HTML/CSS or a subfolder (e.g., images/) -->
-             <!-- Example using a relative path: -->
-             <!-- <img src="images/logo.png" alt="Test Orientation Professionnel"> -->
             <img src="logo.png" alt="Test Orientation Professionnel">
-          </div>
-
+        </div>
     </header>
 
+    <!-- TIPS SECTION - Can be kept or removed -->
     <section id="test-tips" class="resume-analysis">
-        <h2>Test Orientataion Professionnel </h2>
-        <p>Assertivité :  La capacité à s’exprimer et à défendre ses droits sans empiéter sur ceux des autres ...</p>
+        <h2>Test Orientation Professionnel</h2>
+        <p>Assertivité : La capacité à s’exprimer et à défendre ses droits sans empiéter sur ceux des autres ...</p>
         <ul>
-            <li>LExprimez vos besoins et exigences en toute confiance.</li>
+            <li>Exprimez vos besoins et exigences en toute confiance.</li>
             <li>Soyez attentif à votre façon de parler.</li>
-            <li>Soyez positif et constructif </li>
+            <li>Soyez positif et constructif</li>
             <li>Apprenez à dire non.</li>
         </ul>
     </section>
 
-
-    <!-- User Information Section (NEW) -->
+    <!-- User Information Section -->
     <section id="user-info-section">
         <h1>Bienvenue à l'Évaluation d'Orientation</h1>
         <p>Veuillez saisir vos informations pour commencer le test.</p>
-
         <form id="user-info-form">
-            <div id="user-info-error"></div> <!-- Error messages for this form -->
-
+            <div id="user-info-error"></div>
             <div class="form-group">
                 <label for="user-name">Votre Nom Complet :</label>
                 <input type="text" id="user-name" name="userName" required>
             </div>
-
             <div class="form-group">
                 <label for="user-email">Votre Email :</label>
                 <input type="email" id="user-email" name="userEmail" required>
             </div>
-
             <div class="form-group">
                 <label for="user-phone">Votre Numéro de Téléphone :</label>
                 <input type="tel" id="user-phone" name="userPhone" required>
             </div>
-
             <div class="button-container">
                  <button type="button" id="start-test-button">Commencer le Test</button>
             </div>
@@ -413,46 +152,44 @@
     </section>
 
     <!-- Evaluation Section (Initially Hidden) -->
-    <!-- Added 'hidden' class -->
-    <section id="test-evaluation-section" class="resume-checker hidden">
-        <h1>Évaluation d'Orientation : Testez vos Connaissances</h1>
-        <p>Répondez aux questions suivantes (VRAI ou FAUX) et soumettez vos réponses.</p>
+    <section id="test-evaluation-section" class="hidden">
+        <h1>Évaluation d'Orientation</h1>
+        <p id="evaluation-subtitle">Répondez aux questions suivantes (VRAI ou FAUX).</p>
 
         <!-- Container where questions will be dynamically inserted -->
         <div id="questions-container">
-            <!-- Questions will be loaded here by JavaScript -->
-            <p style="text-align: center; padding: 20px; color: #777;">Chargement des questions...</p>
+            <!-- Questions for the current page will be loaded here -->
         </div>
 
-        <!-- Validation Error Message Area -->
+        <!-- Validation Error Message Area (for current page) -->
         <div id="validation-error"></div>
 
-        <!-- Submit Button -->
-        <div class="button-container"> <!-- Used button-container for centering -->
-            <button type="button" onclick="submitAnswers()">Soumettre les Réponses</button>
+        <!-- Pagination Controls -->
+        <div id="pagination-controls">
+            <button type="button" id="prev-button" disabled>Précédent</button>
+            <span id="page-info">Page 1 / X</span>
+            <button type="button" id="next-submit-button">Suivant</button>
         </div>
     </section>
 
-    <!-- Section for Loading Status and Submission Status (Initially Hidden) -->
-    <!-- Added 'hidden' class -->
+    <!-- Section for FINAL Submission Status (Initially Hidden) -->
     <section id="submission-status-section" class="hidden">
+        <h1>Résultats de la Soumission</h1>
         <!-- Loading Indicator -->
         <div id="loading-indicator">
-             <div class="spinner"></div> <!-- Added spinner -->
-            Soumission en cours, veuillez patienter...
+             <div class="spinner"></div>
+             Soumission en cours, veuillez patienter...
         </div>
-
         <!-- Submission Status Container -->
         <div id="submission-status" style="display: none;">
-             <!-- Submission status (success/error) will appear here -->
+             <!-- Final status (success/error) will appear here -->
         </div>
+         <!-- Optional: Add a link back or next steps -->
+         <div class="button-container" id="post-submission-options" style="display: none;">
+            <!-- e.g., <a href="/dashboard">Retour au tableau de bord</a> -->
+            <p>Merci d'avoir complété l'évaluation.</p>
+         </div>
     </section>
-
-    <!-- General Info/Tips Sections (Keep or adapt as needed) -->
-
-
-
-
 
     <!-- Copyright Section -->
     <section class='copyright'>
@@ -460,10 +197,14 @@
     </section>
 
     <!-- ========= JAVASCRIPT ========= -->
-
     <script>
       // --- Global Variables ---
-      let userDetails = {}; // To store user info after validation
+      let userDetails = {};
+      let currentPage = 1;
+      const questionsPerPage = 20;
+      let totalPages = 0;
+      // Store answers temporarily as user navigates
+      let storedAnswers = {}; // Use question index as key: { 0: 'VRAI', 1: 'FAUX', ... }
 
       // --- Elements References ---
       const userInfoSection = document.getElementById('user-info-section');
@@ -476,116 +217,168 @@
       const validationErrorDiv = document.getElementById('validation-error');
       const loadingIndicator = document.getElementById('loading-indicator');
       const statusDiv = document.getElementById('submission-status');
+      const postSubmissionOptions = document.getElementById('post-submission-options');
       const navbar = document.getElementById("navbar");
-
+      const prevButton = document.getElementById('prev-button');
+      const nextSubmitButton = document.getElementById('next-submit-button');
+      const pageInfo = document.getElementById('page-info');
+      const evaluationSubtitle = document.getElementById('evaluation-subtitle'); // To update subtitle
 
       // --- Sticky Header Script ---
       window.onscroll = function() { stickyHeader() };
       var stickyOffset = navbar ? navbar.offsetTop : 0;
        function stickyHeader() {
-        // Check if navbar exists before trying to access properties/methods
         if (!navbar) return;
-
-        if (window.pageYOffset > stickyOffset) { // Use > instead of >= to avoid flicker on exact spot
+        if (window.pageYOffset > stickyOffset) {
           navbar.classList.add("sticky");
         } else {
           navbar.classList.remove("sticky");
         }
       }
 
-    // --- Test Orientation Questions --- (Keep as is)
+    // --- Test Orientation Questions (Keep original list) ---
     const questions_orientation_test = [
-"Je dis souvent oui, alors que je voudrais dire non",
-    "Je défends mes droits, sans empiéter sur ceux des autres",
-    "Je préfère dissimuler ce que je ressens ou pense si je ne connais pas bien mon interlocuteur",
-    "Je suis plutôt autoritaire et décidé",
-    "Il est plus facile et habile d’agir par personne interposée que directement",
-    "Je ne crains pas de critiquer et de dire aux gens ce que je pense",
-    "Je n’ose pas refuser certaines tâches, même si elles ne relèvent pas directement de mes attributions",
-    "Je donne mon opinion, même en face d’interlocuteurs hostiles",
-    "Dans un débat, je préfère me tenir en retrait pour observer et voir ce qui en résultera",
-    "On me reproche parfois d’avoir l’esprit de contradiction",
-    "J’ai du mal à réellement écouter les autres",
-    "Je m’arrange pour être dans le secret des dieux, cela peut bien rendre service",
-    "On me considère en général comme assez malin et habile dans les relations",
-    "Mes rapports aux autres sont basés sur la confiance mutuelle",
-    "Demander de l’aide à un collègue signifie avouer son incompétence",
-    "Je me sens bloqué si je dois réaliser une tâche inhabituelle",
-    "Je m’énerve rapidement quitte à passer pour être « soupe au lait »",
-    "Je suis à l’aise dans les contacts en face à face",
-    "Il m’arrive de jouer la comédie pour arriver à mes fins",
-    "Je suis bavard et il m’arrive de couper la parole à d’autres sans le faire exprès",
-    "J’ai de l’ambition et je suis prêt à faire ce qu’il faut pour y arriver",
-    "Pour réussir, il est important que je sache qui il faut voir et quand",
-    "En cas de désaccord, je recherche la sauvegarde des intérêts mutuels",
-    "Je préfère jouer cartes sur table",
-    "J’ai tendance à remettre à plus tard ce que j’ai à faire",
-    "Je peux laisser un travail en train sans le terminer immédiatement",
-    "Je me présente tel que je suis, sans dissimuler mes sentiments",
-    "Il en faut beaucoup pour m’intimider",
-    "Faire peur aux autres est un bon moyen de prendre du pouvoir",
-    "Si je me suis fait avoir, je sais prendre ma revanche à l’occasion",
-    "Pour critiquer quelqu’un, il est efficace de lui reprocher de ne pas suivre ses propres principes",
-    "Je sais tirer parti du système, je suis un débrouillard",
-    "Je suis capable d’être moi-même tout en continuant à être accepté socialement",
-    "Quand je ne suis pas d’accord, j’ose me faire entendre",
-    "J’ai le souci de n’importuner personne",
-    "J’ai du mal à prendre parti et à toujours choisir",
-    "Je n’aime pas être le seul du groupe à avoir une opinion différente ; dans ce cas, je préfère me taire",
-    "Je n’ai pas peur de parler en public",
-    "La vie est basée sur les rapports de force",
-    "Je relève des défis dangereux et risqués",
-    "Créer des conflits peut être plus efficace que de chercher à réduire les tensions",
-    "Etre franc est un bon moyen pour mettre les autres en confiance",
-    "Je sais écouter, je ne coupe jamais la parole à quiconque",
-    "Je mène jusqu’au bout ce que j’ai décidé de faire",
-    "J’exprime mes sentiments tels que je les ressens",
-    "Je sais amener les gens à adhérer à mes idées",
-    "Flatter reste un bon moyen pour obtenir ce que l’on veut",
-    "J’ai du mal à maîtriser mon temps de parole",
-    "Je sais manier l’ironie, il m’arrive d’être caustique",
-    "Je suis serviable et facile à vivre",
-    "Je préfère l’observation à la participation",
-    "Je préfère être dans les coulisses plutôt qu’au premier rang",
-    "La manipulation est rarement efficace",
-    "Il est maladroit d’annoncer trop vite ses intentions",
-    "Il m’arrive de choquer les gens par mes propos",
-    "Je préfère être loup plutôt qu’agneau",
-    "Utiliser quelqu’un est un moyen pratique d’obtenir ce que l’on veut",
-    "Je sais protester efficacement sans agressivité",
-    "On ne peut résoudre un problème sans en connaître les causes profondes",
-    "Je n’aime pas me faire mal voir"
+        "Je dis souvent oui, alors que je voudrais dire non", // 1
+        "Je défends mes droits, sans empiéter sur ceux des autres",
+        "Je préfère dissimuler ce que je ressens ou pense si je ne connais pas bien mon interlocuteur",
+        "Je suis plutôt autoritaire et décidé",
+        "Il est plus facile et habile d’agir par personne interposée que directement", // 5
+        "Je ne crains pas de critiquer et de dire aux gens ce que je pense",
+        "Je n’ose pas refuser certaines tâches, même si elles ne relèvent pas directement de mes attributions",
+        "Je donne mon opinion, même en face d’interlocuteurs hostiles",
+        "Dans un débat, je préfère me tenir en retrait pour observer et voir ce qui en résultera",
+        "On me reproche parfois d’avoir l’esprit de contradiction", // 10
+        "J’ai du mal à réellement écouter les autres",
+        "Je m’arrange pour être dans le secret des dieux, cela peut bien rendre service",
+        "On me considère en général comme assez malin et habile dans les relations",
+        "Mes rapports aux autres sont basés sur la confiance mutuelle",
+        "Demander de l’aide à un collègue signifie avouer son incompétence", // 15
+        "Je me sens bloqué si je dois réaliser une tâche inhabituelle",
+        "Je m’énerve rapidement quitte à passer pour être « soupe au lait »",
+        "Je suis à l’aise dans les contacts en face à face",
+        "Il m’arrive de jouer la comédie pour arriver à mes fins",
+        "Je suis bavard et il m’arrive de couper la parole à d’autres sans le faire exprès", // 20
+        "J’ai de l’ambition et je suis prêt à faire ce qu’il faut pour y arriver",
+        "Pour réussir, il est important que je sache qui il faut voir et quand",
+        "En cas de désaccord, je recherche la sauvegarde des intérêts mutuels",
+        "Je préfère jouer cartes sur table",
+        "J’ai tendance à remettre à plus tard ce que j’ai à faire", // 25
+        "Je peux laisser un travail en train sans le terminer immédiatement",
+        "Je me présente tel que je suis, sans dissimuler mes sentiments",
+        "Il en faut beaucoup pour m’intimider",
+        "Faire peur aux autres est un bon moyen de prendre du pouvoir",
+        "Si je me suis fait avoir, je sais prendre ma revanche à l’occasion", // 30
+        "Pour critiquer quelqu’un, il est efficace de lui reprocher de ne pas suivre ses propres principes",
+        "Je sais tirer parti du système, je suis un débrouillard",
+        "Je suis capable d’être moi-même tout en continuant à être accepté socialement",
+        "Quand je ne suis pas d’accord, j’ose me faire entendre",
+        "J’ai le souci de n’importuner personne", // 35
+        "J’ai du mal à prendre parti et à toujours choisir",
+        "Je n’aime pas être le seul du groupe à avoir une opinion différente ; dans ce cas, je préfère me taire",
+        "Je n’ai pas peur de parler en public",
+        "La vie est basée sur les rapports de force",
+        "Je relève des défis dangereux et risqués", // 40
+        "Créer des conflits peut être plus efficace que de chercher à réduire les tensions",
+        "Etre franc est un bon moyen pour mettre les autres en confiance",
+        "Je sais écouter, je ne coupe jamais la parole à quiconque",
+        "Je mène jusqu’au bout ce que j’ai décidé de faire",
+        "J’exprime mes sentiments tels que je les ressens", // 45
+        "Je sais amener les gens à adhérer à mes idées",
+        "Flatter reste un bon moyen pour obtenir ce que l’on veut",
+        "J’ai du mal à maîtriser mon temps de parole",
+        "Je sais manier l’ironie, il m’arrive d’être caustique",
+        "Je suis serviable et facile à vivre", // 50
+        "Je préfère l’observation à la participation",
+        "Je préfère être dans les coulisses plutôt qu’au premier rang",
+        "La manipulation est rarement efficace",
+        "Il est maladroit d’annoncer trop vite ses intentions",
+        "Il m’arrive de choquer les gens par mes propos", // 55
+        "Je préfère être loup plutôt qu’agneau",
+        "Utiliser quelqu’un est un moyen pratique d’obtenir ce que l’on veut",
+        "Je sais protester efficacement sans agressivité",
+        "On ne peut résoudre un problème sans en connaître les causes profondes",
+        "Je n’aime pas me faire mal voir" // 60
     ];
 
-    // --- Function to Display Questions ---
-    function displayQuestions() {
+    // --- Function to Display Questions for the Current Page ---
+    function displayCurrentPageQuestions() {
         if (!questionsContainer) {
              console.error("Question container not found!");
              return;
         }
+        questionsContainer.innerHTML = ''; // Clear previous questions
+        validationErrorDiv.style.display = 'none'; // Hide validation errors on page change
+
+        const startIndex = (currentPage - 1) * questionsPerPage;
+        // Ensure endIndex doesn't exceed the total number of questions
+        const endIndex = Math.min(startIndex + questionsPerPage, questions_orientation_test.length);
+
+        // Generate HTML for the current page's questions
         let htmlContent = '';
-        // Add delay for animation effect
-        questions_orientation_test.forEach((question, index) => {
-            const radioName = `q${index}`;
-            // Added animation delay based on index
+        for (let i = startIndex; i < endIndex; i++) {
+            const questionText = questions_orientation_test[i];
+            const questionIndex = i; // Use the original index
+            const radioName = `q${questionIndex}`; // Use original index for unique names
+            const savedAnswer = storedAnswers[questionIndex]; // Get previously saved answer
+
+            // Add animation delay for stagger effect
+            const animationDelay = (i - startIndex) * 0.05;
+
             htmlContent += `
-                <div class="question-block" style="animation-delay: ${index * 0.05}s;">
-                    <p><strong>Question ${index + 1}:</strong> ${question}</p>
+                <div class="question-block" style="animation-delay: ${animationDelay}s;">
+                    <p><strong>Question ${questionIndex + 1}:</strong> ${questionText}</p>
                     <div class="options">
                         <label>
-                            <input type="radio" name="${radioName}" value="VRAI" id="${radioName}_vrai"> VRAI
+                            <input type="radio" name="${radioName}" value="VRAI" id="${radioName}_vrai"
+                                ${savedAnswer === 'VRAI' ? 'checked' : ''}
+                                onchange="storeAnswer(${questionIndex}, this.value)"> VRAI
                         </label>
                         <label>
-                            <input type="radio" name="${radioName}" value="FAUX" id="${radioName}_faux"> FAUX
+                            <input type="radio" name="${radioName}" value="FAUX" id="${radioName}_faux"
+                                ${savedAnswer === 'FAUX' ? 'checked' : ''}
+                                onchange="storeAnswer(${questionIndex}, this.value)"> FAUX
                         </label>
                     </div>
                 </div>
             `;
-        });
+        }
         questionsContainer.innerHTML = htmlContent;
+
+        updatePaginationControls(); // Update buttons and page info
+        // Scroll to top of questions container smoothly
+        questionsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // --- Function to Validate User Info ---
+     // --- Function to store answer temporarily ---
+     function storeAnswer(questionIndex, answer) {
+        storedAnswers[questionIndex] = answer;
+        // Optional: Re-validate the current page silently if needed
+        // validateCurrentPage(true); // Pass true for silent validation
+     }
+
+    // --- Function to Update Pagination Controls ---
+    function updatePaginationControls() {
+        totalPages = Math.ceil(questions_orientation_test.length / questionsPerPage);
+        pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
+
+        // Update subtitle with question range
+        const startNum = (currentPage - 1) * questionsPerPage + 1;
+        const endNum = Math.min(currentPage * questionsPerPage, questions_orientation_test.length);
+        evaluationSubtitle.textContent = `Répondez aux questions ${startNum} à ${endNum} (VRAI ou FAUX).`;
+
+
+        // Enable/Disable Previous Button
+        prevButton.disabled = (currentPage === 1);
+
+        // Change Next Button to Submit on Last Page
+        if (currentPage === totalPages) {
+            nextSubmitButton.textContent = 'Soumettre les Réponses';
+        } else {
+            nextSubmitButton.textContent = 'Suivant';
+        }
+    }
+
+    // --- Function to Validate User Info --- (Keep as is)
     function validateUserInfo() {
         const nameInput = document.getElementById('user-name');
         const emailInput = document.getElementById('user-email');
@@ -593,180 +386,229 @@
         let isValid = true;
         let errors = [];
 
-        // Clear previous highlights and errors
-        [nameInput, emailInput, phoneInput].forEach(input => {
-            input.style.borderColor = '#ccc'; // Reset border
-        });
+        [nameInput, emailInput, phoneInput].forEach(input => { input.style.borderColor = '#ccc'; });
         userInfoError.style.display = 'none';
         userInfoError.innerHTML = '';
 
-        // Validate Name
-        if (!nameInput.value.trim()) {
-            errors.push("Le nom est requis.");
-            nameInput.style.borderColor = '#d9534f';
-            isValid = false;
-        }
+        if (!nameInput.value.trim()) { errors.push("Le nom est requis."); nameInput.style.borderColor = '#d9534f'; isValid = false; }
 
-        // Validate Email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailInput.value.trim()) {
-            errors.push("L'email est requis.");
-            emailInput.style.borderColor = '#d9534f';
-            isValid = false;
-        } else if (!emailRegex.test(emailInput.value.trim())) {
-            errors.push("Le format de l'email est invalide.");
-            emailInput.style.borderColor = '#d9534f';
-            isValid = false;
-        }
+        if (!emailInput.value.trim()) { errors.push("L'email est requis."); emailInput.style.borderColor = '#d9534f'; isValid = false; }
+        else if (!emailRegex.test(emailInput.value.trim())) { errors.push("Le format de l'email est invalide."); emailInput.style.borderColor = '#d9534f'; isValid = false; }
 
-        // Validate Phone (Basic - just checks if not empty)
-        if (!phoneInput.value.trim()) {
-            errors.push("Le numéro de téléphone est requis.");
-            phoneInput.style.borderColor = '#d9534f';
-            isValid = false;
-        }
-        // Optional: Add more complex phone validation if needed
+        if (!phoneInput.value.trim()) { errors.push("Le numéro de téléphone est requis."); phoneInput.style.borderColor = '#d9534f'; isValid = false; }
 
         if (!isValid) {
             userInfoError.innerHTML = errors.join('<br>');
             userInfoError.style.display = 'block';
-            userInfoError.classList.remove('shake'); // Remove class first
-            void userInfoError.offsetWidth; // Trigger reflow to restart animation
-            userInfoError.classList.add('shake'); // Add shake animation
+            userInfoError.classList.remove('shake');
+            void userInfoError.offsetWidth;
+            userInfoError.classList.add('shake');
         } else {
-            // Store valid details
-            userDetails = {
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim()
-            };
+            userDetails = { name: nameInput.value.trim(), email: emailInput.value.trim(), phone: phoneInput.value.trim() };
         }
-
         return isValid;
     }
 
-
-    // --- Event Listener for Start Test Button ---
-    if (startTestButton) {
-        startTestButton.addEventListener('click', () => {
-            if (validateUserInfo()) {
-                // Hide User Info Section with animation
-                userInfoSection.classList.add('hidden');
-
-                 // Use setTimeout to allow the hide animation to start before showing the next section
-                 setTimeout(() => {
-                     userInfoSection.style.display = 'none'; // Fully hide after animation
-
-                     // Show Test Evaluation Section with animation
-                     testEvaluationSection.style.display = 'block'; // Make it take space
-                     // Force reflow before adding class to ensure transition plays
-                     void testEvaluationSection.offsetWidth;
-                     testEvaluationSection.classList.remove('hidden');
-
-                     // Optionally scroll to the questions
-                     testEvaluationSection.scrollIntoView({ behavior: 'smooth' });
-                 }, 500); // Match CSS transition duration
-
-            }
-        });
-    } else {
-         console.error("Start Test Button not found!");
-    }
-
-
-    // --- Function to Submit Answers ---
-    async function submitAnswers() {
-        // --- Configuration ---
-        const webhookUrl = "https://bay-donated-fishing-casino.trycloudflare.com/webhook/4c63983c-f640-4c8c-a531-b82f2159e2fb";
-
-
-        // --- Collect Candidate Answers ---
-        const submissions = [];
-        let allAnswered = true;
+    // --- Function to Validate ONLY the questions on the CURRENT page ---
+    function validateCurrentPage(silent = false) { // Added silent mode
         validationErrorDiv.style.display = 'none'; // Hide previous errors
-        document.querySelectorAll('.question-block').forEach(b => b.style.borderLeft = ''); // Clear validation borders
+        let isPageValid = true;
+        const startIndex = (currentPage - 1) * questionsPerPage;
+        const endIndex = Math.min(startIndex + questionsPerPage, questions_orientation_test.length);
 
-        questions_orientation_test.forEach((question, index) => {
-            const radioName = `q${index}`;
+        // Find all question blocks currently visible/rendered
+        const currentQuestionBlocks = questionsContainer.querySelectorAll('.question-block');
+
+        currentQuestionBlocks.forEach((block, indexOnPage) => {
+            const overallIndex = startIndex + indexOnPage; // Calculate the original index
+            const radioName = `q${overallIndex}`;
             const selectedRadio = document.querySelector(`input[name="${radioName}"]:checked`);
-            const block = document.querySelector(`input[name="${radioName}"]`)?.closest('.question-block');
 
-            if (selectedRadio) {
-                submissions.push({
-                    question: question,
-                    candidate_answer: selectedRadio.value
-                });
-                 if (block) block.style.borderLeft = ''; // Clear border if previously marked
-            } else {
-                allAnswered = false;
-                if (block) block.style.borderLeft = '3px solid #d9534f'; // Highlight unanswered
+             // Clear previous highlight
+             block.style.borderLeft = '';
+
+            if (!selectedRadio) {
+                isPageValid = false;
+                if (!silent) { // Only highlight if not in silent mode
+                    block.style.borderLeft = '3px solid #d9534f'; // Highlight unanswered
+                }
             }
         });
 
-        // --- Validation ---
-        if (!allAnswered) {
-            validationErrorDiv.textContent = 'Veuillez répondre à toutes les questions avant de soumettre.';
+        if (!isPageValid && !silent) {
+            validationErrorDiv.textContent = 'Veuillez répondre à toutes les questions sur cette page avant de continuer.';
             validationErrorDiv.style.display = 'block';
             validationErrorDiv.classList.remove('shake');
             void validationErrorDiv.offsetWidth;
             validationErrorDiv.classList.add('shake');
-            // Scroll to the error message
+            // Scroll to the error message if it's shown
             validationErrorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        return isPageValid;
+    }
+
+     // --- Event Listener for Start Test Button ---
+     if (startTestButton) {
+         startTestButton.addEventListener('click', () => {
+             if (validateUserInfo()) {
+                 userInfoSection.classList.add('hidden');
+                 setTimeout(() => {
+                     userInfoSection.style.display = 'none'; // Fully hide
+
+                     testEvaluationSection.style.display = 'block';
+                     void testEvaluationSection.offsetWidth; // Reflow
+                     testEvaluationSection.classList.remove('hidden');
+
+                     // Initialize the first page of questions
+                     displayCurrentPageQuestions(); // Display page 1
+
+                     testEvaluationSection.scrollIntoView({ behavior: 'smooth' });
+                 }, 500);
+             }
+         });
+     } else { console.error("Start Test Button not found!"); }
+
+
+     // --- Event Listeners for Pagination ---
+     if (prevButton) {
+         prevButton.addEventListener('click', () => {
+             if (currentPage > 1) {
+                 // No validation needed to go back, just save current state implicitly via storedAnswers
+                 currentPage--;
+                 displayCurrentPageQuestions();
+             }
+         });
+     }
+
+     if (nextSubmitButton) {
+         nextSubmitButton.addEventListener('click', () => {
+             // 1. Validate the current page first
+             if (!validateCurrentPage()) {
+                 return; // Stop if current page is invalid
+             }
+
+             // 2. Check if it's the last page
+             if (currentPage === totalPages) {
+                 // If last page, trigger the final submission process
+                 submitAllAnswers();
+             } else {
+                 // If not the last page, go to the next page
+                 currentPage++;
+                 displayCurrentPageQuestions();
+             }
+         });
+     }
+
+    // --- Function to Submit ALL Answers (Called only from last page) ---
+    async function submitAllAnswers() {
+        // --- Configuration ---
+        const webhookUrl = "https://bay-donated-fishing-casino.trycloudflare.com/webhook/4c63983c-f640-4c8c-a531-b82f2159e2fb"; // Make sure this is correct
+
+        // --- Final Validation (Check if ALL questions have an answer stored) ---
+        let allAnswered = true;
+        for (let i = 0; i < questions_orientation_test.length; i++) {
+            if (storedAnswers[i] === undefined) {
+                allAnswered = false;
+                console.error(`Missing answer for question index ${i}`);
+                // You could potentially navigate back to the page with the missing answer here,
+                // but for simplicity, we'll just show a general error.
+                break;
+            }
+        }
+
+        if (!allAnswered) {
+             // This error should ideally not happen if page-by-page validation works,
+             // but it's a safeguard.
+            displaySubmissionResult("Erreur : Toutes les questions n'ont pas été répondues. Veuillez vérifier les pages précédentes.", false);
+             // Don't hide the questions section yet
             return; // Stop submission
         }
 
         // --- Prepare for API Call ---
-        statusDiv.innerHTML = ''; // Clear previous status
-        statusDiv.style.display = 'none';
-        loadingIndicator.style.display = 'flex'; // Use flex for spinner centering
-        submissionStatusSection.classList.remove('hidden'); // Show the status section
-        submissionStatusSection.style.display = 'block'; // Ensure it's block
-        void submissionStatusSection.offsetWidth; // Reflow for animation
+        // 1. Hide the evaluation section immediately for a cleaner transition
+        testEvaluationSection.classList.add('hidden');
+        setTimeout(() => { testEvaluationSection.style.display = 'none'; }, 500); // Hide after animation
+
+        // 2. Show the submission status section and loading indicator
+        submissionStatusSection.style.display = 'block';
+        void submissionStatusSection.offsetWidth; // Reflow
+        submissionStatusSection.classList.remove('hidden');
+        statusDiv.style.display = 'none'; // Hide previous status message
+        postSubmissionOptions.style.display = 'none'; // Hide options
+        loadingIndicator.style.display = 'flex'; // Show loader
+        submissionStatusSection.scrollIntoView({ behavior: 'smooth' }); // Scroll to loader
 
 
-        // --- Prepare Payload (Include User Details) ---
+        // --- Prepare Payload ---
+        const submissions = [];
+        for (let i = 0; i < questions_orientation_test.length; i++) {
+            submissions.push({
+                question: questions_orientation_test[i],
+                candidate_answer: storedAnswers[i] || "Non répondu" // Fallback
+            });
+        }
+
         const payload = {
-            userDetails: userDetails, // Add the collected user details
+            userDetails: userDetails,
             submissions: submissions
         };
 
         // --- Fetch Request ---
         try {
             console.log(`Sending data to: ${webhookUrl}`);
-            console.log("Payload:", JSON.stringify(payload, null, 2)); // Log the payload
+            console.log("Payload:", JSON.stringify(payload, null, 2));
 
-            await fetch(webhookUrl, {
+            const response = await fetch(webhookUrl, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
 
-            console.log("Submission request sent.");
-            displaySubmissionStatus("Vos réponses ont été soumises avec succès. Merci !", true);
-             // Optionally hide the questions after successful submission
-             // testEvaluationSection.classList.add('hidden');
+            // Check if the request was successful (status code 2xx)
+            if (!response.ok) {
+                 // Throw an error to be caught by the catch block
+                 // Try to get error details from response if possible
+                 let errorBody = 'Unknown error';
+                 try { errorBody = await response.text(); } catch (_) {}
+                 throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            }
+
+
+            console.log("Submission request successful.");
+            displaySubmissionResult("Vos réponses ont été soumises avec succès. Merci !", true);
 
         } catch (error) {
             console.error("Erreur lors de la soumission:", error);
             let errorMessage = "La soumission des réponses a échoué. Veuillez réessayer.";
-            if (error.message.includes('Failed to fetch')) {
-                 errorMessage = "Erreur de connexion au serveur. Impossible de soumettre les réponses. Vérifiez votre connexion ou contactez l'administrateur.";
-            } else if (error.message) {
-                 errorMessage = `Erreur de soumission : ${error.message}`;
+            if (error && error.message) {
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage = "Erreur de connexion au serveur. Impossible de soumettre les réponses. Vérifiez votre connexion ou contactez l'administrateur.";
+                } else if (error.message.includes('HTTP error')) {
+                    errorMessage = `Erreur du serveur lors de la soumission : ${error.message}. Veuillez contacter l'administrateur.`;
+                }
+                 else {
+                    errorMessage = `Erreur de soumission : ${error.message}`;
+                 }
             }
-            displaySubmissionStatus(errorMessage, false);
+            displaySubmissionResult(errorMessage, false);
         } finally {
-            loadingIndicator.style.display = 'none'; // Hide loading indicator
+            loadingIndicator.style.display = 'none'; // Always hide loading indicator
         }
     }
 
-    // --- Function to display submission status ---
-    function displaySubmissionStatus(message, isSuccess) {
+    // --- Function to display FINAL submission result on the dedicated page ---
+    function displaySubmissionResult(message, isSuccess) {
+        loadingIndicator.style.display = 'none'; // Ensure loader is hidden
         statusDiv.textContent = message;
         statusDiv.className = isSuccess ? 'status-success' : 'status-error';
-        statusDiv.style.display = "block";
+        statusDiv.style.display = "block"; // Show status message
 
-        // Ensure the section is visible and scroll to it
+        // Optionally show post-submission options/message
+        postSubmissionOptions.style.display = 'block';
+
+        // Ensure the section is visible and centered
         submissionStatusSection.style.display = 'block';
         submissionStatusSection.classList.remove('hidden');
         statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -775,13 +617,14 @@
 
     // --- Initial Setup on Page Load ---
     document.addEventListener('DOMContentLoaded', () => {
-         // Display questions immediately but keep the section hidden via CSS/JS
-         displayQuestions();
-         // Ensure sections start hidden (redundant if CSS class 'hidden' is applied in HTML)
+         // Sections start hidden via CSS class 'hidden'
          testEvaluationSection.classList.add('hidden');
          submissionStatusSection.classList.add('hidden');
          userInfoSection.classList.remove('hidden'); // Ensure user info is shown first
          stickyHeader(); // Initial check for sticky header
+
+         // Calculate total pages initially (though it's recalculated later)
+         totalPages = Math.ceil(questions_orientation_test.length / questionsPerPage);
     });
 
     </script>
