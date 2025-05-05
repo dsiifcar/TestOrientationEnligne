@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évaluation d'Orientation Test IA - Commencez</title> <!-- Updated Title -->
+    <link rel="stylesheet" href="cvvv.css"> <!-- Ensure this path is correct -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> <!-- Added Google Font -->
+    <style>
+        /* General Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Apply modern font */ 
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6; /* Softer background */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        /* Header Styling */
+        #navbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 15px 30px;
+            display: flex;
+            /* justify-content: space-between; */ /* Removed */
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            position: relative; /* Good practice if children might be positioned absolutely later */
+        }
+            .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        margin: 0 auto; /* ADD THIS LINE TO CENTER THE LOGO DIV */
+        /* You might want to remove left/right padding from #navbar if the logo looks too far from edges now */
+        /* Or adjust the padding on #navbar */
+        }
+
+        .logo img {
+            max-width: 200px; /* control the width */
+            height: auto; /* maintain aspect ratio */
+            }
+
+            #navbar nav {
+     margin-left: auto; /* ADD THIS RULE TO PUSH NAV TO THE RIGHT */
+     /* You might need display: flex; here if the links don't align as desired */
+     /* display: flex; */
+     /* align-items: center; */
+}
+
+        #navbar nav a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 20px; /* Keep space between nav links */
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #navbar nav a:hover, #navbar nav a.active {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+        #navbar.sticky { /* Style for sticky header */
+             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+
+        /* Section Styling */
+        section {
+            padding: 40px 20px;
+            margin: 20px auto;
+            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Animation */
+        }
+
+        /* Hide elements smoothly */
+        section.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none; /* Prevent interaction when hidden */
+            max-height: 0; /* Collapse space */
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            overflow: hidden; /* Crucial for collapsing */
+            border: none;
+            box-shadow: none;
+             transition: opacity 0.4s ease-in, transform 0.4s ease-in, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s ease-in-out;
+        }
+
+
+        h1, h2 {
+            color: #0056b3; /* Brand color for headings */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+             margin-bottom: 10px;
+             padding-left: 20px;
+             position: relative;
+        }
+         ul li::before {
+             content: '✓'; /* Checkmark */
+             color: #28a745; /* Green color */
+             position: absolute;
+             left: 0;
+             font-weight: bold;
+         }
+
+        /* User Info Form Styles */
+        #user-info-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between form elements */
+            margin-top: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
+            outline: none;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #007bff; /* Primary blue */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: inline-block; /* Align center */
+            margin-top: 10px; /* Space above button */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+         button:active {
+            transform: scale(0.98); /* Press effect */
+         }
+
+        /* Centered Button Container */
+         .button-container {
+            text-align: center;
+            margin-top: 20px;
+         }
+
+
+        /* Question Styling (Adjusted from original) */
+        #questions-container {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ccc;
+            animation: fadeIn 0.5s ease-out forwards; /* Add fade-in for questions */
+            opacity: 0; /* Start hidden for animation */
+        }
+         .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 5px;
+         }
+        .question-block p {
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: #333;
+            text-align: center; /* Center the question text as well */
+        }
+        .question-block .options {
+             display: flex; /* Align radio buttons nicely */
+             justify-content: center; /* Center the items horizontally */
+             gap: 40px; /* Increased gap for better visual separation when centered */
+             margin-top: 10px;
+        }
+        .question-block label {
+            cursor: pointer;
+            display: inline-flex; /* Align radio and text */
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+         .question-block label:hover {
+             color: #0056b3; /* Highlight on hover */
+         }
+        .question-block input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+            accent-color: #007bff; /* Modern way to color radios */
+            transform: scale(1.1); /* Slightly larger */
+        }
+
+        /* Validation and Status Messages */
+        #user-info-error,
+        #validation-error {
+            color: #d9534f; /* Bootstrap danger color */
+            font-weight: 500;
+            margin-top: 15px;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #d9534f;
+            background-color: #f2dede;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+            animation: shake 0.5s; /* Shake animation for errors */
+        }
+
+        #submission-status {
+             margin-top: 20px;
+             padding: 15px;
+             border-radius: 5px;
+             text-align: center;
+             font-weight: bold;
+             animation: fadeIn 0.5s ease-out; /* Fade in status */
+        }
+        .status-success {
+            color: #3c763d; /* Dark green */
+            background-color: #dff0d8; /* Light green */
+            border: 1px solid #d6e9c6;
+        }
+        .status-error {
+            color: #a94442; /* Dark red */
+            background-color: #f2dede; /* Light red */
+            border: 1px solid #ebccd1;
+        }
+
+        /* Loading Indicator */
+        #loading-indicator {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #555;
+            display: flex; /* Use flex for centering spinner */
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #007bff;
+            animation: spin 1s ease infinite;
+        }
+
+        /* Contact & Copyright */
+        .contact ul, .copyright p {
+             text-align: center;
+        }
+         .contact ul li {
+             display: inline-block;
+             margin: 0 15px;
+             padding-left: 0;
+         }
+          .contact ul li::before {
+             content: ''; /* Remove default check */
+         }
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+         @keyframes shake {
+             0%, 100% { transform: translateX(0); }
+             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+             20%, 40%, 60%, 80% { transform: translateX(5px); }
+         }
+
+         /* Responsive Adjustments (Example) */
+         @media (max-width: 768px) {
+             #navbar {
+                 flex-direction: column;
+                 padding: 10px 15px;
+             }
+             #navbar nav {
+                 margin-top: 10px;
+             }
+             #navbar nav a {
+                 margin: 0 5px;
+                 display: inline-block; /* Prevent stacking */
+             }
+             h1 { font-size: 1.8em; }
+             h2 { font-size: 1.4em; }
+             /* Stack options vertically on smaller screens if needed */
+             /* .question-block .options {
+                 flex-direction: column;
+                 align-items: center;
+             } */
+         }
+
+
+    </style>
+</head>
+<body>
+    <header id="navbar">
+        <div class="logo">
+             <!-- Make sure this path is correct and accessible by the browser -->
+             <!-- If using a local file path like C:\..., it will ONLY work on YOUR computer -->
+             <!-- Best practice: Place the logo in the same folder as your HTML/CSS or a subfolder (e.g., images/) -->
+             <!-- Example using a relative path: -->
+             <!-- <img src="images/logo.png" alt="Test Orientation Professionnel"> -->
+            <img src="logo.png" alt="Test Orientation Professionnel">
+          </div>
+
+    </header>
+
+    <section id="test-tips" class="resume-analysis">
+        <h2>Test Orientataion Professionnel </h2>
+        <p>Assertivité :  La capacité à s’exprimer et à défendre ses droits sans empiéter sur ceux des autres ...</p>
+        <ul>
+            <li>LExprimez vos besoins et exigences en toute confiance.</li>
+            <li>Soyez attentif à votre façon de parler.</li>
+            <li>Soyez positif et constructif </li>
+            <li>Apprenez à dire non.</li>
+        </ul>
+    </section>
+
+
+    <!-- User Information Section (NEW) -->
+    <section id="user-info-section">
+        <h1>Bienvenue à l'Évaluation d'Orientation</h1>
+        <p>Veuillez saisir vos informations pour commencer le test.</p>
+
+        <form id="user-info-form">
+            <div id="user-info-error"></div> <!-- Error messages for this form -->
+
+            <div class="form-group">
+                <label for="user-name">Votre Nom Complet :</label>
+                <input type="text" id="user-name" name="userName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="user-email">Votre Email :</label>
+                <input type="email" id="user-email" name="userEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="user-phone">Votre Numéro de Téléphone :</label>
+                <input type="tel" id="user-phone" name="userPhone" required>
+            </div>
+
+            <div class="button-container">
+                 <button type="button" id="start-test-button">Commencer le Test</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Evaluation Section (Initially Hidden) -->
+    <!-- Added 'hidden' class -->
+    <section id="test-evaluation-section" class="resume-checker hidden">
+        <h1>Évaluation d'Orientation : Testez vos Connaissances</h1>
+        <p>Répondez aux questions suivantes (VRAI ou FAUX) et soumettez vos réponses.</p>
+
+        <!-- Container where questions will be dynamically inserted -->
+        <div id="questions-container">
+            <!-- Questions will be loaded here by JavaScript -->
+            <p style="text-align: center; padding: 20px; color: #777;">Chargement des questions...</p>
+        </div>
+
+        <!-- Validation Error Message Area -->
+        <div id="validation-error"></div>
+
+        <!-- Submit Button -->
+        <div class="button-container"> <!-- Used button-container for centering -->
+            <button type="button" onclick="submitAnswers()">Soumettre les Réponses</button>
+        </div>
+    </section>
+
+    <!-- Section for Loading Status and Submission Status (Initially Hidden) -->
+    <!-- Added 'hidden' class -->
+    <section id="submission-status-section" class="hidden">
+        <!-- Loading Indicator -->
+        <div id="loading-indicator">
+             <div class="spinner"></div> <!-- Added spinner -->
+            Soumission en cours, veuillez patienter...
+        </div>
+
+        <!-- Submission Status Container -->
+        <div id="submission-status" style="display: none;">
+             <!-- Submission status (success/error) will appear here -->
+        </div>
+    </section>
+
+    <!-- General Info/Tips Sections (Keep or adapt as needed) -->
+
+
+
+
+
+    <!-- Copyright Section -->
+    <section class='copyright'>
+        <p>Copyright 2025 Évaluation Test IA | Tous droits réservés</p>
+    </section>
+
+    <!-- ========= JAVASCRIPT ========= -->
+
+    <script>
+      // --- Global Variables ---
+      let userDetails = {}; // To store user info after validation
+
+      // --- Elements References ---
+      const userInfoSection = document.getElementById('user-info-section');
+      const testEvaluationSection = document.getElementById('test-evaluation-section');
+      const submissionStatusSection = document.getElementById('submission-status-section');
+      const startTestButton = document.getElementById('start-test-button');
+      const userInfoForm = document.getElementById('user-info-form');
+      const userInfoError = document.getElementById('user-info-error');
+      const questionsContainer = document.getElementById('questions-container');
+      const validationErrorDiv = document.getElementById('validation-error');
+      const loadingIndicator = document.getElementById('loading-indicator');
+      const statusDiv = document.getElementById('submission-status');
+      const navbar = document.getElementById("navbar");
+
+
+      // --- Sticky Header Script ---
+      window.onscroll = function() { stickyHeader() };
+      var stickyOffset = navbar ? navbar.offsetTop : 0;
+       function stickyHeader() {
+        // Check if navbar exists before trying to access properties/methods
+        if (!navbar) return;
+
+        if (window.pageYOffset > stickyOffset) { // Use > instead of >= to avoid flicker on exact spot
+          navbar.classList.add("sticky");
+        } else {
+          navbar.classList.remove("sticky");
+        }
+      }
+
+    // --- Test Orientation Questions --- (Keep as is)
+    const questions_orientation_test = [
+"Je dis souvent oui, alors que je voudrais dire non",
+    "Je défends mes droits, sans empiéter sur ceux des autres",
+    "Je préfère dissimuler ce que je ressens ou pense si je ne connais pas bien mon interlocuteur",
+    "Je suis plutôt autoritaire et décidé",
+    "Il est plus facile et habile d’agir par personne interposée que directement",
+    "Je ne crains pas de critiquer et de dire aux gens ce que je pense",
+    "Je n’ose pas refuser certaines tâches, même si elles ne relèvent pas directement de mes attributions",
+    "Je donne mon opinion, même en face d’interlocuteurs hostiles",
+    "Dans un débat, je préfère me tenir en retrait pour observer et voir ce qui en résultera",
+    "On me reproche parfois d’avoir l’esprit de contradiction",
+    "J’ai du mal à réellement écouter les autres",
+    "Je m’arrange pour être dans le secret des dieux, cela peut bien rendre service",
+    "On me considère en général comme assez malin et habile dans les relations",
+    "Mes rapports aux autres sont basés sur la confiance mutuelle",
+    "Demander de l’aide à un collègue signifie avouer son incompétence",
+    "Je me sens bloqué si je dois réaliser une tâche inhabituelle",
+    "Je m’énerve rapidement quitte à passer pour être « soupe au lait »",
+    "Je suis à l’aise dans les contacts en face à face",
+    "Il m’arrive de jouer la comédie pour arriver à mes fins",
+    "Je suis bavard et il m’arrive de couper la parole à d’autres sans le faire exprès",
+    "J’ai de l’ambition et je suis prêt à faire ce qu’il faut pour y arriver",
+    "Pour réussir, il est important que je sache qui il faut voir et quand",
+    "En cas de désaccord, je recherche la sauvegarde des intérêts mutuels",
+    "Je préfère jouer cartes sur table",
+    "J’ai tendance à remettre à plus tard ce que j’ai à faire",
+    "Je peux laisser un travail en train sans le terminer immédiatement",
+    "Je me présente tel que je suis, sans dissimuler mes sentiments",
+    "Il en faut beaucoup pour m’intimider",
+    "Faire peur aux autres est un bon moyen de prendre du pouvoir",
+    "Si je me suis fait avoir, je sais prendre ma revanche à l’occasion",
+    "Pour critiquer quelqu’un, il est efficace de lui reprocher de ne pas suivre ses propres principes",
+    "Je sais tirer parti du système, je suis un débrouillard",
+    "Je suis capable d’être moi-même tout en continuant à être accepté socialement",
+    "Quand je ne suis pas d’accord, j’ose me faire entendre",
+    "J’ai le souci de n’importuner personne",
+    "J’ai du mal à prendre parti et à toujours choisir",
+    "Je n’aime pas être le seul du groupe à avoir une opinion différente ; dans ce cas, je préfère me taire",
+    "Je n’ai pas peur de parler en public",
+    "La vie est basée sur les rapports de force",
+    "Je relève des défis dangereux et risqués",
+    "Créer des conflits peut être plus efficace que de chercher à réduire les tensions",
+    "Etre franc est un bon moyen pour mettre les autres en confiance",
+    "Je sais écouter, je ne coupe jamais la parole à quiconque",
+    "Je mène jusqu’au bout ce que j’ai décidé de faire",
+    "J’exprime mes sentiments tels que je les ressens",
+    "Je sais amener les gens à adhérer à mes idées",
+    "Flatter reste un bon moyen pour obtenir ce que l’on veut",
+    "J’ai du mal à maîtriser mon temps de parole",
+    "Je sais manier l’ironie, il m’arrive d’être caustique",
+    "Je suis serviable et facile à vivre",
+    "Je préfère l’observation à la participation",
+    "Je préfère être dans les coulisses plutôt qu’au premier rang",
+    "La manipulation est rarement efficace",
+    "Il est maladroit d’annoncer trop vite ses intentions",
+    "Il m’arrive de choquer les gens par mes propos",
+    "Je préfère être loup plutôt qu’agneau",
+    "Utiliser quelqu’un est un moyen pratique d’obtenir ce que l’on veut",
+    "Je sais protester efficacement sans agressivité",
+    "On ne peut résoudre un problème sans en connaître les causes profondes",
+    "Je n’aime pas me faire mal voir"
+    ];
+
+    // --- Function to Display Questions ---
+    function displayQuestions() {
+        if (!questionsContainer) {
+             console.error("Question container not found!");
+             return;
+        }
+        let htmlContent = '';
+        // Add delay for animation effect
+        questions_orientation_test.forEach((question, index) => {
+            const radioName = `q${index}`;
+            // Added animation delay based on index
+            htmlContent += `
+                <div class="question-block" style="animation-delay: ${index * 0.05}s;">
+                    <p><strong>Question ${index + 1}:</strong> ${question}</p>
+                    <div class="options">
+                        <label>
+                            <input type="radio" name="${radioName}" value="VRAI" id="${radioName}_vrai"> VRAI
+                        </label>
+                        <label>
+                            <input type="radio" name="${radioName}" value="FAUX" id="${radioName}_faux"> FAUX
+                        </label>
+                    </div>
+                </div>
+            `;
+        });
+        questionsContainer.innerHTML = htmlContent;
+    }
+
+    // --- Function to Validate User Info ---
+    function validateUserInfo() {
+        const nameInput = document.getElementById('user-name');
+        const emailInput = document.getElementById('user-email');
+        const phoneInput = document.getElementById('user-phone');
+        let isValid = true;
+        let errors = [];
+
+        // Clear previous highlights and errors
+        [nameInput, emailInput, phoneInput].forEach(input => {
+            input.style.borderColor = '#ccc'; // Reset border
+        });
+        userInfoError.style.display = 'none';
+        userInfoError.innerHTML = '';
+
+        // Validate Name
+        if (!nameInput.value.trim()) {
+            errors.push("Le nom est requis.");
+            nameInput.style.borderColor = '#d9534f';
+            isValid = false;
+        }
+
+        // Validate Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim()) {
+            errors.push("L'email est requis.");
+            emailInput.style.borderColor = '#d9534f';
+            isValid = false;
+        } else if (!emailRegex.test(emailInput.value.trim())) {
+            errors.push("Le format de l'email est invalide.");
+            emailInput.style.borderColor = '#d9534f';
+            isValid = false;
+        }
+
+        // Validate Phone (Basic - just checks if not empty)
+        if (!phoneInput.value.trim()) {
+            errors.push("Le numéro de téléphone est requis.");
+            phoneInput.style.borderColor = '#d9534f';
+            isValid = false;
+        }
+        // Optional: Add more complex phone validation if needed
+
+        if (!isValid) {
+            userInfoError.innerHTML = errors.join('<br>');
+            userInfoError.style.display = 'block';
+            userInfoError.classList.remove('shake'); // Remove class first
+            void userInfoError.offsetWidth; // Trigger reflow to restart animation
+            userInfoError.classList.add('shake'); // Add shake animation
+        } else {
+            // Store valid details
+            userDetails = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim()
+            };
+        }
+
+        return isValid;
+    }
+
+
+    // --- Event Listener for Start Test Button ---
+    if (startTestButton) {
+        startTestButton.addEventListener('click', () => {
+            if (validateUserInfo()) {
+                // Hide User Info Section with animation
+                userInfoSection.classList.add('hidden');
+
+                 // Use setTimeout to allow the hide animation to start before showing the next section
+                 setTimeout(() => {
+                     userInfoSection.style.display = 'none'; // Fully hide after animation
+
+                     // Show Test Evaluation Section with animation
+                     testEvaluationSection.style.display = 'block'; // Make it take space
+                     // Force reflow before adding class to ensure transition plays
+                     void testEvaluationSection.offsetWidth;
+                     testEvaluationSection.classList.remove('hidden');
+
+                     // Optionally scroll to the questions
+                     testEvaluationSection.scrollIntoView({ behavior: 'smooth' });
+                 }, 500); // Match CSS transition duration
+
+            }
+        });
+    } else {
+         console.error("Start Test Button not found!");
+    }
+
+
+    // --- Function to Submit Answers ---
+    async function submitAnswers() {
+        // --- Configuration ---
+        const webhookUrl = "https://violet-friends-rule.loca.lt/webhook/4c63983c-f640-4c8c-a531-b82f2159e2fb";
+
+        
+        // --- Collect Candidate Answers ---
+        const submissions = [];
+        let allAnswered = true;
+        validationErrorDiv.style.display = 'none'; // Hide previous errors
+        document.querySelectorAll('.question-block').forEach(b => b.style.borderLeft = ''); // Clear validation borders
+
+        questions_orientation_test.forEach((question, index) => {
+            const radioName = `q${index}`;
+            const selectedRadio = document.querySelector(`input[name="${radioName}"]:checked`);
+            const block = document.querySelector(`input[name="${radioName}"]`)?.closest('.question-block');
+
+            if (selectedRadio) {
+                submissions.push({
+                    question: question,
+                    candidate_answer: selectedRadio.value
+                });
+                 if (block) block.style.borderLeft = ''; // Clear border if previously marked
+            } else {
+                allAnswered = false;
+                if (block) block.style.borderLeft = '3px solid #d9534f'; // Highlight unanswered
+            }
+        });
+
+        // --- Validation ---
+        if (!allAnswered) {
+            validationErrorDiv.textContent = 'Veuillez répondre à toutes les questions avant de soumettre.';
+            validationErrorDiv.style.display = 'block';
+            validationErrorDiv.classList.remove('shake');
+            void validationErrorDiv.offsetWidth;
+            validationErrorDiv.classList.add('shake');
+            // Scroll to the error message
+            validationErrorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return; // Stop submission
+        }
+
+        // --- Prepare for API Call ---
+        statusDiv.innerHTML = ''; // Clear previous status
+        statusDiv.style.display = 'none';
+        loadingIndicator.style.display = 'flex'; // Use flex for spinner centering
+        submissionStatusSection.classList.remove('hidden'); // Show the status section
+        submissionStatusSection.style.display = 'block'; // Ensure it's block
+        void submissionStatusSection.offsetWidth; // Reflow for animation
+
+
+        // --- Prepare Payload (Include User Details) ---
+        const payload = {
+            userDetails: userDetails, // Add the collected user details
+            submissions: submissions
+        };
+
+        // --- Fetch Request ---
+        try {
+            console.log(`Sending data to: ${webhookUrl}`);
+            console.log("Payload:", JSON.stringify(payload, null, 2)); // Log the payload
+
+            await fetch(webhookUrl, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Submission request sent.");
+            displaySubmissionStatus("Vos réponses ont été soumises avec succès. Merci !", true);
+             // Optionally hide the questions after successful submission
+             // testEvaluationSection.classList.add('hidden');
+
+        } catch (error) {
+            console.error("Erreur lors de la soumission:", error);
+            let errorMessage = "La soumission des réponses a échoué. Veuillez réessayer.";
+            if (error.message.includes('Failed to fetch')) {
+                 errorMessage = "Erreur de connexion au serveur. Impossible de soumettre les réponses. Vérifiez votre connexion ou contactez l'administrateur.";
+            } else if (error.message) {
+                 errorMessage = `Erreur de soumission : ${error.message}`;
+            }
+            displaySubmissionStatus(errorMessage, false);
+        } finally {
+            loadingIndicator.style.display = 'none'; // Hide loading indicator
+        }
+    }
+
+    // --- Function to display submission status ---
+    function displaySubmissionStatus(message, isSuccess) {
+        statusDiv.textContent = message;
+        statusDiv.className = isSuccess ? 'status-success' : 'status-error';
+        statusDiv.style.display = "block";
+
+        // Ensure the section is visible and scroll to it
+        submissionStatusSection.style.display = 'block';
+        submissionStatusSection.classList.remove('hidden');
+        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+
+    // --- Initial Setup on Page Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+         // Display questions immediately but keep the section hidden via CSS/JS
+         displayQuestions();
+         // Ensure sections start hidden (redundant if CSS class 'hidden' is applied in HTML)
+         testEvaluationSection.classList.add('hidden');
+         submissionStatusSection.classList.add('hidden');
+         userInfoSection.classList.remove('hidden'); // Ensure user info is shown first
+         stickyHeader(); // Initial check for sticky header
+    });
+
+    </script>
+
+</body>
+</html>
